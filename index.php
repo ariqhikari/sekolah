@@ -2,10 +2,11 @@
 
 include "db/koneksi.php";
 
-$success = flash("success");
-$error = flash("error");
-
-checkLogin();
+// Check apakah sudah login atau belum, jika belum
+// sistem akan me-redirect ke halaman login.php
+if (checkLogin() == false) {
+    header("Location: login.php");
+}
 
 // Membuat Query SQL mengambil data siswa
 $query = "SELECT * FROM students";

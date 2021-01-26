@@ -1,4 +1,6 @@
 <?php
+
+// Menghapus session sebelumnya
 session_start();
 session_destroy();
 
