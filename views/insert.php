@@ -1,3 +1,7 @@
+<?php
+$action = "insert";
+if (!empty($student)) $action = "edit";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -16,7 +20,7 @@
     <!-- Custom styles for this page -->
     <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <title>PHP Dasar - Dashboard</title>
+    <title>PHP Dasar - Insert</title>
 </head>
 
 <body id="page-top">
@@ -119,107 +123,48 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tabel Siswa</h1>
-                    <p class="mb-4">Berikut adalah daftar siswa yang telah terdaftar</p>
+                    <h1 class="h3 mb-4 text-gray-800">Tambah Data Siswa</h1>
 
-                    <!-- Tabel Siswa -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa</h6>
-                            <a href="insert.php" class="btn btn-primary">Tambah Data Siswa</a>
-                        </div>
+                    <div class="card border-0">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <form action="index.php" method="GET" class="row justify-content-between">
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Cari berdasarkan NIS dan nama.." name="search" value="<?= @$search ?>">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Cari</button>
-                                            </div>
-                                        </div>
+                            <form action="<?= $action ?>.php" method="POST">
+                                <div class="form-group">
+                                    <label for="nis">NIS</label>
+                                    <input type="number" class="form-control" id="nis" name="nis" value="<?= @$student["nis"] ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="<?= @$student["name"] ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Jenis Kelamin</label> <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="L" value="L" <?= @$student["gender"] == "L" ? "checked" : "" ?> required>
+                                        <label class="form-check-label" for="L">Laki - laki</label>
                                     </div>
-                                    <div class="col-md-6 d-md-flex justify-content-end">
-                                        <a href="index.php" class="btn btn-primary mb-3">Clear</a>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="P" value="P" <?= @$student["gender"] == "P" ? "checked" : "" ?> required>
+                                        <label class="form-check-label" for="P">Perempuan</label>
                                     </div>
-                                </form>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>
-                                                NIS
-                                                <a href="index.php?sort=nis&order=asc">↑</a>
-                                                <a href="index.php?sort=nis&order=desc">↓</a>
-                                            </th>
-                                            <th>
-                                                Nama Lengkap
-                                                <a href="index.php?sort=name&order=asc">↑</a>
-                                                <a href="index.php?sort=name&order=desc">↓</a>
-                                            </th>
-                                            <th>
-                                                Jenis Kelamin
-                                                <a href="index.php?sort=gender&order=asc">↑</a>
-                                                <a href="index.php?sort=gender&order=desc">↓</a>
-                                            </th>
-                                            <th>
-                                                Alamat
-                                                <a href="index.php?sort=address&order=asc">↑</a>
-                                                <a href="index.php?sort=address&order=desc">↓</a>
-                                            </th>
-                                            <th>
-                                                No Telepon
-                                                <a href="index.php?sort=phone_number&order=asc">↑</a>
-                                                <a href="index.php?sort=phone_number&order=desc">↓</a>
-                                            </th>
-                                            <th>
-                                                Kelas
-                                                <a href="index.php?sort=class&order=asc">↑</a>
-                                                <a href="index.php?sort=class&order=desc">↓</a>
-                                            </th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>NIS</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Alamat</th>
-                                            <th>No Telepon</th>
-                                            <th>Kelas</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php if ($result->num_rows == 0) : ?>
-                                            <tr>
-                                                <td colspan="8" class="text-center">
-                                                    <h5 class="font-weight-bold">Siswa Tidak Ditemukan!</h5>
-                                                </td>
-                                            </tr>
-                                        <?php else : ?>
-                                            <?php $i = 1; ?>
-                                            <?php while ($student = $result->fetch_assoc()) : ?>
-                                                <tr>
-                                                    <td><?= $i++ ?></td>
-                                                    <td><?= $student["nis"] ?></td>
-                                                    <td><?= $student["name"] ?></td>
-                                                    <td><?= ($student["gender"] == "P" ? "Perempuan" : "Laki-laki") ?></td>
-                                                    <td><?= $student["address"] ?></td>
-                                                    <td><?= $student["phone_number"] ?></td>
-                                                    <td><?= $student["class"] ?></td>
-                                                    <td>
-                                                        <a href="edit.php?nis=<?= $student['nis'] ?>">Edit</a> |
-                                                        <a href="delete.php?nis=<?= $student['nis'] ?>" onclick="return confirm('Yakin ingin menghapus siswa?')">Delete</a>
-                                                    </td>
-                                                </tr>
-                                            <?php endwhile; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Alamat</label>
+                                    <textarea name="address" id="address" class="form-control" required><?= @$student["address"] ?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone_number">Nomor Telepon</label>
+                                    <input type="number" class="form-control" id="phone_number" name="phone_number" value="<?= @$student["phone_number"] ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="class">Kelas</label>
+                                    <input type="text" class="form-control" id="class" name="class" value="<?= @$student["class"] ?>" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit"><?= $action ?> Data</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -280,14 +225,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <!-- <script src="assets/vendor/datatables/jquery.dataTables.min.js"></script> -->
-    <!-- <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
-
-    <!-- Page level custom scripts -->
-    <!-- <script src="assets/js/demo/datatables-demo.js"></script> -->
-
 </body>
 
 

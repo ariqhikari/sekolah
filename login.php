@@ -1,6 +1,6 @@
 <?php
 
-include "db/koneksi.php";
+include "lib/library.php";
 
 // Check apakah sudah login atau belum, jika sudah
 // sistem akan me-redirect ke halaman index.php

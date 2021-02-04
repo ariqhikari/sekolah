@@ -1,7 +1,5 @@
 <?php
 
-include "lib/library.php";
-
 $host = "localhost";
 $user = "root";
 $pass = "";
