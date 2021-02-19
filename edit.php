@@ -12,6 +12,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST["address"];
     $phone_number = $_POST["phone_number"];
     $class = $_POST["class"];
+    $avatar = $_POST["avatar"];
+    $avatarUpload = $_FILES["avatar"];
+
+    if (!empty($avatarUpload) and $avatarUpload["error"] == 0) {
+        $path = "./assets/img/students/";
+        $upload = move_uploaded_file($avatarUpload["tmp_name"], $path . $avatarUpload["name"]);
+
+        if (!$upload) {
+            flash("error", "Upload file gagal!");
+            header("Location: index.php");
+        }
+
+        $avatar = $avatarUpload["name"];
+    }
 
     $query = "UPDATE students SET
         nis = '$nis',
@@ -20,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         address = '$address',
         phone_number = '$phone_number',
         class = '$class',
+        avatar = '$avatar'
+        WHERE nis = '$nis'
     ";
 
     $mysqli->query($query) or die($mysqli->error);

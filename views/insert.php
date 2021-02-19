@@ -127,7 +127,7 @@ if (!empty($student)) $action = "edit";
 
                     <div class="card border-0">
                         <div class="card-body">
-                            <form action="<?= $action ?>.php" method="POST">
+                            <form action="<?= $action ?>.php" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="nis">NIS</label>
                                     <input type="number" class="form-control" id="nis" name="nis" value="<?= @$student["nis"] ?>" required>
@@ -159,9 +159,21 @@ if (!empty($student)) $action = "edit";
                                     <label for="class">Kelas</label>
                                     <input type="text" class="form-control" id="class" name="class" value="<?= @$student["class"] ?>" required>
                                 </div>
+                                <div class="form-group">
+                                    <label for="avatar">Foto</label>
+                                    <?php if ($action == "edit") : ?>
+                                        <?php if (strlen(@$student["avatar"]) > 0) : ?>
+                                            <img src="assets/img/students/<?= @$student["avatar"] ?>" alt="<?= @$student["name"] ?>" width="80px" class="d-block mb-2">
+                                        <?php else : ?>
+                                            <img src="assets/img/students/default.jpg" alt="Default Avatar" width="80px" class="d-block mb-2">
+                                        <?php endif; ?>
+                                        <input type="hidden" name="avatar" value="<?= @$student["avatar"] ?>">
+                                    <?php endif; ?>
+                                    <input type="file" name="avatar" id="avatar" class="form-control">
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12 d-flex justify-content-end">
-                                        <button class="btn btn-primary" type="submit"><?= $action ?> Data</button>
+                                        <button class="btn btn-primary text-capitalize" type="submit"><?= $action ?> Data</button>
                                     </div>
                                 </div>
                             </form>

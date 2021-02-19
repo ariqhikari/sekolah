@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this page -->
     <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="assets/vendor/toastr/toastr.min.css" rel="stylesheet">
 
     <title>PHP Dasar - Dashboard</title>
 </head>
@@ -144,9 +145,11 @@
                                     </div>
                                 </form>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <!-- thead dan tfoot tambahkan <th>Foto</th> setelah # -->
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Foto</th>
                                             <th>
                                                 NIS
                                                 <a href="index.php?sort=nis&order=asc">↑</a>
@@ -183,6 +186,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
+                                            <th>Foto</th>
                                             <th>NIS</th>
                                             <th>Nama Lengkap</th>
                                             <th>Jenis Kelamin</th>
@@ -204,6 +208,13 @@
                                             <?php while ($student = $result->fetch_assoc()) : ?>
                                                 <tr>
                                                     <td><?= $i++ ?></td>
+                                                    <td align="center">
+                                                        <?php if (strlen($student["avatar"]) > 0) : ?>
+                                                            <img src="assets/img/students/<?= $student["avatar"] ?>" alt="<?= $student["name"] ?>" width="80px">
+                                                        <?php else : ?>
+                                                            <img src="assets/img/students/default.jpg" alt="Default Avatar" width="80px">
+                                                        <?php endif; ?>
+                                                    </td>
                                                     <td><?= $student["nis"] ?></td>
                                                     <td><?= $student["name"] ?></td>
                                                     <td><?= ($student["gender"] == "P" ? "Perempuan" : "Laki-laki") ?></td>
@@ -212,7 +223,7 @@
                                                     <td><?= $student["class"] ?></td>
                                                     <td>
                                                         <a href="edit.php?nis=<?= $student['nis'] ?>">Edit</a> |
-                                                        <a href="delete.php?nis=<?= $student['nis'] ?>" onclick="return confirm('Yakin ingin menghapus siswa?')">Delete</a>
+                                                        <a href="delete.php?nis=<?= $student['nis'] ?>" data-delete="<?= $student['name'] ?>">Delete</a>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
@@ -271,8 +282,28 @@
         </div>
     </div>
 
+    <!-- Delete Data Modal -->
+    <div class="delete-modal modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-primary btn-delete">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -282,12 +313,40 @@
     <script src="assets/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
+    <script src="assets/vendor/toastr/toastr.min.js"></script>
     <!-- <script src="assets/vendor/datatables/jquery.dataTables.min.js"></script> -->
     <!-- <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
 
     <!-- Page level custom scripts -->
     <!-- <script src="assets/js/demo/datatables-demo.js"></script> -->
 
+    <script>
+        $(function() {
+            $('[data-delete]').on('click', function(e) {
+                e.preventDefault();
+
+                const nama = this.dataset.delete;
+                const href = this.href;
+
+                $('.delete-modal').modal('show');
+                $('.delete-modal .modal-body').html(`Anda yakin ingin menghapus data <b>${nama}</b>?`);
+
+                $('.btn-delete').off();
+                $('.btn-delete').on('click', function() {
+                    $.ajax({
+                        'url': href,
+                        'type': 'GET',
+                        'success': function(result) {
+                            if (result == 1) {
+                                $('.delete-modal').modal('hide');
+                                toastr.success('Data berhasil dihapus', 'Informasi');
+                            }
+                        },
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 
 
