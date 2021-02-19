@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2021 at 07:33 AM
+-- Generation Time: Feb 19, 2021 at 01:29 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `classes`
+--
+
+CREATE TABLE `classes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`id`, `name`) VALUES
+(1, 'XI RPL 1'),
+(2, 'XI RPL 2'),
+(3, 'XI RPL 3');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -34,15 +54,18 @@ CREATE TABLE `students` (
   `gender` enum('P','L') NOT NULL,
   `address` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
-  `class` varchar(255) NOT NULL
+  `class_id` int(11) NOT NULL,
+  `avatar` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `nis`, `name`, `gender`, `address`, `phone_number`, `class`) VALUES
-(1, '1920118102', 'Ariq Hikari Hidayat', 'L', 'Jl. XX No. XX', '86543423', 'XI RPL 2');
+INSERT INTO `students` (`id`, `nis`, `name`, `gender`, `address`, `phone_number`, `class_id`, `avatar`) VALUES
+(1, '1920118102', 'Ariq Hikari Hidayat', 'L', 'Jl. XX No. XX', '08582112', 2, 'default.jpg'),
+(2, '1920118110', 'Daffa Mahendra', 'L', 'Jl. XX No. XX', '081221212', 2, 'default.jpg'),
+(5, '1920118117', 'Iqbal Ismayadi', 'L', 'Jl. XX No. XX', '086221211', 1, 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -69,6 +92,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `level`) VALUES
 --
 
 --
+-- Indexes for table `classes`
+--
+ALTER TABLE `classes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -85,10 +114,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `classes`
+--
+ALTER TABLE `classes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`

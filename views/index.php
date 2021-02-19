@@ -177,8 +177,8 @@
                                             </th>
                                             <th>
                                                 Kelas
-                                                <a href="index.php?sort=class&order=asc">↑</a>
-                                                <a href="index.php?sort=class&order=desc">↓</a>
+                                                <a href="index.php?sort=class_id&order=asc">↑</a>
+                                                <a href="index.php?sort=class_id&order=desc">↓</a>
                                             </th>
                                             <th>Action</th>
                                         </tr>
@@ -187,12 +187,36 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Foto</th>
-                                            <th>NIS</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Alamat</th>
-                                            <th>No Telepon</th>
-                                            <th>Kelas</th>
+                                            <th>
+                                                NIS
+                                                <a href="index.php?sort=nis&order=asc">↑</a>
+                                                <a href="index.php?sort=nis&order=desc">↓</a>
+                                            </th>
+                                            <th>
+                                                Nama Lengkap
+                                                <a href="index.php?sort=name&order=asc">↑</a>
+                                                <a href="index.php?sort=name&order=desc">↓</a>
+                                            </th>
+                                            <th>
+                                                Jenis Kelamin
+                                                <a href="index.php?sort=gender&order=asc">↑</a>
+                                                <a href="index.php?sort=gender&order=desc">↓</a>
+                                            </th>
+                                            <th>
+                                                Alamat
+                                                <a href="index.php?sort=address&order=asc">↑</a>
+                                                <a href="index.php?sort=address&order=desc">↓</a>
+                                            </th>
+                                            <th>
+                                                No Telepon
+                                                <a href="index.php?sort=phone_number&order=asc">↑</a>
+                                                <a href="index.php?sort=phone_number&order=desc">↓</a>
+                                            </th>
+                                            <th>
+                                                Kelas
+                                                <a href="index.php?sort=class_id&order=asc">↑</a>
+                                                <a href="index.php?sort=class_id&order=desc">↓</a>
+                                            </th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -220,7 +244,7 @@
                                                     <td><?= ($student["gender"] == "P" ? "Perempuan" : "Laki-laki") ?></td>
                                                     <td><?= $student["address"] ?></td>
                                                     <td><?= $student["phone_number"] ?></td>
-                                                    <td><?= $student["class"] ?></td>
+                                                    <td><?= $student["class_name"] ?></td>
                                                     <td>
                                                         <a href="edit.php?nis=<?= $student['nis'] ?>">Edit</a> |
                                                         <a href="delete.php?nis=<?= $student['nis'] ?>" data-delete="<?= $student['name'] ?>">Delete</a>
@@ -304,6 +328,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="assets/vendor/toastr/toastr.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -313,7 +338,6 @@
     <script src="assets/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="assets/vendor/toastr/toastr.min.js"></script>
     <!-- <script src="assets/vendor/datatables/jquery.dataTables.min.js"></script> -->
     <!-- <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
 
@@ -321,24 +345,44 @@
     <!-- <script src="assets/js/demo/datatables-demo.js"></script> -->
 
     <script>
+        // Menjalankan JQuery ketika seluruh halaman sudah ter-load
         $(function() {
+            // Ambil elemen tombol delete, lalu ketika tombol di-klik jalankan function tersebut
             $('[data-delete]').on('click', function(e) {
+                // Karena, tombol delete memakai tag <a>, maka
+                // kita batalkan aksi tersebut agar halaman tidak berpindah sesuai href-nya
                 e.preventDefault();
 
+                // Ambil nama yang terdapat di data-delete
                 const nama = this.dataset.delete;
+                // Ambil row data student
+                const studentRow = $(this).parent().parent();
+                // Ambil link yang terdapat di tombol delete
                 const href = this.href;
 
+                // Tampilkan Modal Delete
                 $('.delete-modal').modal('show');
+                // Tambahkan teks konfirmasi didalam .modal-body
                 $('.delete-modal .modal-body').html(`Anda yakin ingin menghapus data <b>${nama}</b>?`);
 
+                // Ketika tombol konfirmasi 'Ya' di-klik maka jalankan function AJAX
                 $('.btn-delete').off();
                 $('.btn-delete').on('click', function() {
+                    // Konfigurasi AJAX
                     $.ajax({
+                        // URL tujuan
                         'url': href,
+                        // Tipe AJAX
                         'type': 'GET',
+                        // Jika berhasil jalankan function tersebut
                         'success': function(result) {
+                            // Cek jika result == 1
                             if (result == 1) {
+                                // Hilahkan Modal Delete dan row data student yang kita hapus
                                 $('.delete-modal').modal('hide');
+                                studentRow.fadeOut();
+
+                                // Tampilkan pesan success
                                 toastr.success('Data berhasil dihapus', 'Informasi');
                             }
                         },

@@ -9,7 +9,19 @@ if (checkLogin() == false) {
 }
 
 // Membuat Query SQL mengambil data siswa
-$query = "SELECT * FROM students";
+$query = "SELECT 
+        -- kolom yg akan diambil
+        students.nis,
+        students.name,
+        students.gender,
+        students.address,
+        students.phone_number,
+        students.avatar,
+        classes.name as class_name
+        -- Tabel students INNER JOIN / relation dengan classes
+        FROM students
+        INNER JOIN classes
+        ON students.class_id = classes.id";
 
 // Searching
 $search = @$_GET['search'];

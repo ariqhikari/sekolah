@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender = $_POST["gender"];
     $address = $_POST["address"];
     $phone_number = $_POST["phone_number"];
-    $class = $_POST["class"];
+    $class_id = $_POST["class_id"];
     $avatar = $_POST["avatar"];
     $avatarUpload = $_FILES["avatar"];
 
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         gender = '$gender',
         address = '$address',
         phone_number = '$phone_number',
-        class = '$class',
+        class_id = '$class_id',
         avatar = '$avatar'
         WHERE nis = '$nis'
     ";
@@ -47,9 +47,14 @@ $nis = $_GET["nis"];
 
 if (empty($nis)) header("Location: index.php");
 
+// Ambil Data Siswa
 $query = "SELECT * FROM students WHERE nis = '$nis'";
 $result = $mysqli->query($query);
 $student = $result->fetch_assoc();
+
+// Ambil Data Kelas
+$query = "SELECT * FROM classes";
+$result = $mysqli->query($query);
 
 if (empty($student)) header("Location: index.php");
 

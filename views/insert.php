@@ -156,8 +156,16 @@ if (!empty($student)) $action = "edit";
                                     <input type="number" class="form-control" id="phone_number" name="phone_number" value="<?= @$student["phone_number"] ?>" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="class">Kelas</label>
-                                    <input type="text" class="form-control" id="class" name="class" value="<?= @$student["class"] ?>" required>
+                                    <label for="class_id">Kelas</label>
+                                    <select name="class_id" id="class_id" class="form-control" required>
+                                        <option>Pilih Kelas</option>
+                                        <!-- Looping data kelas -->
+                                        <?php while ($class = $result->fetch_assoc()) : ?>
+                                            <option value="<?= $class['id'] ?>" <?= @($student['class_id'] == $class['id']) ? 'selected' : '' ?>>
+                                                <?= $class['name'] ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="avatar">Foto</label>

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender = $_POST["gender"];
     $address = $_POST["address"];
     $phone_number = $_POST["phone_number"];
-    $class = $_POST["class"];
+    $class_id = $_POST["class_id"];
     $avatar = $_FILES["avatar"];
 
     if (!empty($avatar) and $avatar["error"] == 0) {
@@ -28,12 +28,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $avatar = "default.jpg";
     }
 
-    $query = "INSERT INTO students (nis, name, gender, address, phone_number, class, avatar) 
-        VALUES ('$nis', '$name', '$gender', '$address', '$phone_number', '$class', '$avatar')";
+    $query = "INSERT INTO students (nis, name, gender, address, phone_number, class_id, avatar) 
+        VALUES ('$nis', '$name', '$gender', '$address', '$phone_number', '$class_id', '$avatar')";
 
     $mysqli->query($query) or die($mysqli->error);
 
     header("Location: index.php");
 }
+
+// Ambil Data Kelas
+$query = "SELECT * FROM classes";
+$result = $mysqli->query($query);
 
 include "views/insert.php";
