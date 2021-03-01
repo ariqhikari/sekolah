@@ -123,41 +123,50 @@ if (!empty($student)) $action = "edit";
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Tambah Data Siswa</h1>
+                    <h1 class="h3 mb-4 text-gray-800 text-capitalize"><?= $action ?> Data Siswa</h1>
 
                     <div class="card border-0">
                         <div class="card-body">
+                            <?php if (!empty($errors)) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <ul class="m-0">
+                                        <?php foreach ($errors as $error) : ?>
+                                            <li><?= $error ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
                             <form action="<?= $action ?>.php" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="nis">NIS</label>
-                                    <input type="number" class="form-control" id="nis" name="nis" value="<?= @$student["nis"] ?>" required>
+                                    <input type="number" class="form-control" id="nis" name="nis" value="<?= @$student["nis"] ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="<?= @$student["name"] ?>" required>
+                                    <input type="text" class="form-control" id="name" name="name" value="<?= @$student["name"] ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Jenis Kelamin</label> <br>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="L" value="L" <?= @$student["gender"] == "L" ? "checked" : "" ?> required>
+                                        <input class="form-check-input" type="radio" name="gender" id="L" value="L" <?= @$student["gender"] == "L" ? "checked" : "" ?>>
                                         <label class="form-check-label" for="L">Laki - laki</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="P" value="P" <?= @$student["gender"] == "P" ? "checked" : "" ?> required>
+                                        <input class="form-check-input" type="radio" name="gender" id="P" value="P" <?= @$student["gender"] == "P" ? "checked" : "" ?>>
                                         <label class="form-check-label" for="P">Perempuan</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Alamat</label>
-                                    <textarea name="address" id="address" class="form-control" required><?= @$student["address"] ?></textarea>
+                                    <textarea name="address" id="address" class="form-control"><?= @$student["address"] ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone_number">Nomor Telepon</label>
-                                    <input type="number" class="form-control" id="phone_number" name="phone_number" value="<?= @$student["phone_number"] ?>" required>
+                                    <input type="number" class="form-control" id="phone_number" name="phone_number" value="<?= @$student["phone_number"] ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="class_id">Kelas</label>
-                                    <select name="class_id" id="class_id" class="form-control" required>
+                                    <select name="class_id" id="class_id" class="form-control">
                                         <option>Pilih Kelas</option>
                                         <!-- Looping data kelas -->
                                         <?php while ($class = $result->fetch_assoc()) : ?>

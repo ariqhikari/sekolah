@@ -6,10 +6,15 @@ session_start();
 function flash($tipe, $pesan = "")
 {
     if (empty($pesan)) {
+        // Get
         $pesan = @$_SESSION[$tipe];
         unset($_SESSION[$tipe]);
+
+        return $pesan;
     } else {
-        $_SESSION[$tipe] = $pesan;
+        // Set
+        $_SESSION[$tipe] = is_array(@$_SESSION[$tipe]) ? $_SESSION[$tipe] : [];
+        array_push($_SESSION[$tipe], $pesan);
     }
 }
 

@@ -29,7 +29,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -37,14 +37,14 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <!-- <hr class="sidebar-divider my-0"> -->
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -99,11 +99,11 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -130,6 +130,11 @@
                             <a href="insert.php" class="btn btn-primary">Tambah Data Siswa</a>
                         </div>
                         <div class="card-body">
+                            <?php if (!empty($success)) : ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?= $success[0] ?>
+                                </div>
+                            <?php endif; ?>
                             <div class="table-responsive">
                                 <form action="index.php" method="GET" class="row justify-content-between">
                                     <div class="col-md-6 col-lg-3">
@@ -241,7 +246,7 @@
                                                     </td>
                                                     <td><?= $student["nis"] ?></td>
                                                     <td><?= $student["name"] ?></td>
-                                                    <td><?= ($student["gender"] == "P" ? "Perempuan" : "Laki-laki") ?></td>
+                                                    <td><?= $student["gender"] == "P" ? "Perempuan" : "Laki-laki" ?></td>
                                                     <td><?= $student["address"] ?></td>
                                                     <td><?= $student["phone_number"] ?></td>
                                                     <td><?= $student["class_name"] ?></td>
@@ -383,7 +388,7 @@
                                 studentRow.fadeOut();
 
                                 // Tampilkan pesan success
-                                toastr.success('Data berhasil dihapus', 'Informasi');
+                                toastr.success('Siswa berhasil dihapus', 'Informasi');
                             }
                         },
                     });

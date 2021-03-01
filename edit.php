@@ -6,28 +6,36 @@ if (checkLogin() == false) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nis = $_POST["nis"];
-    $name = $_POST["name"];
-    $gender = $_POST["gender"];
-    $address = $_POST["address"];
-    $phone_number = $_POST["phone_number"];
-    $class_id = $_POST["class_id"];
-    $avatar = $_POST["avatar"];
-    $avatarUpload = $_FILES["avatar"];
+    $nis = @$_POST["nis"];
+    $name = @$_POST["name"];
+    $gender = @$_POST["gender"];
+    $address = @$_POST["address"];
+    $phone_number = @$_POST["phone_number"];
+    $class_id = @$_POST["class_id"];
+    $avatar = @$_POST["avatar"];
+    $avatarUpload = @$_FILES["avatar"];
 
-    if (!empty($avatarUpload) and $avatarUpload["error"] == 0) {
-        $path = "./assets/img/students/";
-        $upload = move_uploaded_file($avatarUpload["tmp_name"], $path . $avatarUpload["name"]);
+    empty($nis) ? flash("error", "Mohon masukkan NIS") : null;
+    empty($name) ? flash("error", "Mohon masukkan Nama Lengkap") : null;
+    empty($gender) ? flash("error", "Mohon masukkan Jenis Kelamin") : null;
+    empty($address) ? flash("error", "Mohon masukkan Alamat") : null;
+    empty($phone_number) ? flash("error", "Mohon masukkan Nomor Telepon") : null;
+    empty($class_id) ? flash("error", "Mohon masukkan Kelas") : null;
 
-        if (!$upload) {
-            flash("error", "Upload file gagal!");
-            header("Location: index.php");
+    if (!empty($nis) && !empty($name) && !empty($gender) && !empty($address) && !empty($address) && !empty($phone_number) && !empty($class_id)) {
+        if (!empty($avatarUpload) and $avatarUpload["error"] == 0) {
+            $path = "./assets/img/students/";
+            $upload = move_uploaded_file($avatarUpload["tmp_name"], $path . $avatarUpload["name"]);
+
+            if (!$upload) {
+                flash("error", "Upload file gagal!");
+                header("Location: index.php");
+            }
+
+            $avatar = $avatarUpload["name"];
         }
 
-        $avatar = $avatarUpload["name"];
-    }
-
-    $query = "UPDATE students SET
+        $query = "UPDATE students SET
         nis = '$nis',
         name = '$name',
         gender = '$gender',
@@ -38,14 +46,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         WHERE nis = '$nis'
     ";
 
-    $mysqli->query($query) or die($mysqli->error);
+        $mysqli->query($query) or die($mysqli->error);
 
-    header("Location: index.php");
+        flash("success", "Siswa berhasil diupdate!");
+        header("Location: index.php");
+    }
 }
 
 $nis = $_GET["nis"];
 
 if (empty($nis)) header("Location: index.php");
+
+// Ambil pesan-pesan error
+$errors = flash("error");
 
 // Ambil Data Siswa
 $query = "SELECT * FROM students WHERE nis = '$nis'";

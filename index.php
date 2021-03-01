@@ -8,6 +8,8 @@ if (checkLogin() == false) {
     header("Location: login.php");
 }
 
+$success = flash("success");
+
 // Membuat Query SQL mengambil data siswa
 $query = "SELECT 
         -- kolom yg akan diambil
