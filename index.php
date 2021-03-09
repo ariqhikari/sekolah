@@ -28,8 +28,8 @@ $query = "SELECT
 // Searching
 $search = @$_GET['search'];
 if (!empty($search)) {
-    $query .= " WHERE nis LIKE '%$search%' 
-            OR name LIKE '%$search%'";
+    $query .= " WHERE students.nis LIKE '%$search%' 
+            OR students.name LIKE '%$search%'";
 }
 
 // Ordering

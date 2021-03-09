@@ -157,33 +157,33 @@
                                             <th>Foto</th>
                                             <th>
                                                 NIS
-                                                <a href="index.php?sort=nis&order=asc">↑</a>
-                                                <a href="index.php?sort=nis&order=desc">↓</a>
+                                                <a href="index.php?sort=students.nis&order=asc">↑</a>
+                                                <a href="index.php?sort=students.nis&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Nama Lengkap
-                                                <a href="index.php?sort=name&order=asc">↑</a>
-                                                <a href="index.php?sort=name&order=desc">↓</a>
+                                                <a href="index.php?sort=students.name&order=asc">↑</a>
+                                                <a href="index.php?sort=students.name&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Jenis Kelamin
-                                                <a href="index.php?sort=gender&order=asc">↑</a>
-                                                <a href="index.php?sort=gender&order=desc">↓</a>
+                                                <a href="index.php?sort=students.gender&order=asc">↑</a>
+                                                <a href="index.php?sort=students.gender&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Alamat
-                                                <a href="index.php?sort=address&order=asc">↑</a>
-                                                <a href="index.php?sort=address&order=desc">↓</a>
+                                                <a href="index.php?sort=students.address&order=asc">↑</a>
+                                                <a href="index.php?sort=students.address&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 No Telepon
-                                                <a href="index.php?sort=phone_number&order=asc">↑</a>
-                                                <a href="index.php?sort=phone_number&order=desc">↓</a>
+                                                <a href="index.php?sort=students.phone_number&order=asc">↑</a>
+                                                <a href="index.php?sort=students.phone_number&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Kelas
-                                                <a href="index.php?sort=class_id&order=asc">↑</a>
-                                                <a href="index.php?sort=class_id&order=desc">↓</a>
+                                                <a href="index.php?sort=classes.name&order=asc">↑</a>
+                                                <a href="index.php?sort=classes.name&order=desc">↓</a>
                                             </th>
                                             <th>Action</th>
                                         </tr>
@@ -194,33 +194,33 @@
                                             <th>Foto</th>
                                             <th>
                                                 NIS
-                                                <a href="index.php?sort=nis&order=asc">↑</a>
-                                                <a href="index.php?sort=nis&order=desc">↓</a>
+                                                <a href="index.php?sort=students.nis&order=asc">↑</a>
+                                                <a href="index.php?sort=students.nis&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Nama Lengkap
-                                                <a href="index.php?sort=name&order=asc">↑</a>
-                                                <a href="index.php?sort=name&order=desc">↓</a>
+                                                <a href="index.php?sort=students.name&order=asc">↑</a>
+                                                <a href="index.php?sort=students.name&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Jenis Kelamin
-                                                <a href="index.php?sort=gender&order=asc">↑</a>
-                                                <a href="index.php?sort=gender&order=desc">↓</a>
+                                                <a href="index.php?sort=students.gender&order=asc">↑</a>
+                                                <a href="index.php?sort=students.gender&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Alamat
-                                                <a href="index.php?sort=address&order=asc">↑</a>
-                                                <a href="index.php?sort=address&order=desc">↓</a>
+                                                <a href="index.php?sort=students.address&order=asc">↑</a>
+                                                <a href="index.php?sort=students.address&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 No Telepon
-                                                <a href="index.php?sort=phone_number&order=asc">↑</a>
-                                                <a href="index.php?sort=phone_number&order=desc">↓</a>
+                                                <a href="index.php?sort=students.phone_number&order=asc">↑</a>
+                                                <a href="index.php?sort=students.phone_number&order=desc">↓</a>
                                             </th>
                                             <th>
                                                 Kelas
-                                                <a href="index.php?sort=class_id&order=asc">↑</a>
-                                                <a href="index.php?sort=class_id&order=desc">↓</a>
+                                                <a href="index.php?sort=classes.name&order=asc">↑</a>
+                                                <a href="index.php?sort=classes.name&order=desc">↓</a>
                                             </th>
                                             <th>Action</th>
                                         </tr>
